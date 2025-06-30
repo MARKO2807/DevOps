@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spa-deployment
+  labels:
+    app: spa
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: spa
+  template:
+    metadata:
+      labels:
+        app: spa
+    spec:
+      containers:
+      - name: spa
+        image: spa:latest
+        imagePullPolicy: Never  # Use local image
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "100m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5 

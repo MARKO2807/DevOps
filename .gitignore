@@ -1,0 +1,31 @@
+# Dependencies
+spa/node_modules/
+spa/package-lock.json
+
+# Build outputs
+spa/dist/
+spa/build/
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Docker
+.dockerignore 
