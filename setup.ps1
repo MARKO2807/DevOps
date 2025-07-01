@@ -1,4 +1,3 @@
-# PowerShell Setup Script for Kubernetes Web Server & SPA Project
 
 param(
     [string]$ClusterName = "my-cluster"
@@ -7,10 +6,8 @@ param(
 Write-Host "🚀 Setting up Kubernetes Web Server & SPA Project" -ForegroundColor Green
 Write-Host "==================================================" -ForegroundColor Green
 
-# Check prerequisites
 Write-Host "📋 Checking prerequisites..." -ForegroundColor Yellow
 
-# Check Docker
 try {
     docker --version | Out-Null
     Write-Host "✅ Docker found" -ForegroundColor Green
@@ -19,7 +16,6 @@ try {
     exit 1
 }
 
-# Check kind
 try {
     kind version | Out-Null
     Write-Host "✅ kind found" -ForegroundColor Green
@@ -28,7 +24,7 @@ try {
     exit 1
 }
 
-# Check kubectl
+
 try {
     kubectl version --client | Out-Null
     Write-Host "✅ kubectl found" -ForegroundColor Green
@@ -39,7 +35,6 @@ try {
 
 Write-Host "✅ All prerequisites found!" -ForegroundColor Green
 
-# Create kind cluster
 Write-Host "🔧 Creating kind cluster..." -ForegroundColor Yellow
 $existingClusters = kind get clusters 2>$null
 if ($existingClusters -contains $ClusterName) {
@@ -54,7 +49,6 @@ if ($existingClusters -contains $ClusterName) {
     }
 }
 
-# Build and load webserver image
 Write-Host "🏗️  Building webserver image..." -ForegroundColor Yellow
 docker build -t webserver:latest ./webserver
 if ($LASTEXITCODE -eq 0) {
@@ -67,7 +61,6 @@ if ($LASTEXITCODE -eq 0) {
 Write-Host "📦 Loading webserver image to kind..." -ForegroundColor Yellow
 kind load docker-image webserver:latest --name $ClusterName
 
-# Build and load SPA image
 Write-Host "🏗️  Building SPA image..." -ForegroundColor Yellow
 docker build -t spa:latest ./spa
 if ($LASTEXITCODE -eq 0) {
@@ -80,18 +73,15 @@ if ($LASTEXITCODE -eq 0) {
 Write-Host "📦 Loading SPA image to kind..." -ForegroundColor Yellow
 kind load docker-image spa:latest --name $ClusterName
 
-# Deploy to Kubernetes
 Write-Host "🚀 Deploying to Kubernetes..." -ForegroundColor Yellow
 kubectl apply -f ./k8s/
 
-# Wait for deployments to be ready
 Write-Host "⏳ Waiting for deployments to be ready..." -ForegroundColor Yellow
 kubectl wait --for=condition=available --timeout=300s deployment/webserver-deployment
 kubectl wait --for=condition=available --timeout=300s deployment/spa-deployment
 
 Write-Host "✅ All deployments are ready!" -ForegroundColor Green
 
-# Show status
 Write-Host "📊 Deployment Status:" -ForegroundColor Cyan
 Write-Host "====================" -ForegroundColor Cyan
 kubectl get pods

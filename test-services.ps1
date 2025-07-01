@@ -1,9 +1,7 @@
-# PowerShell Test Script for Kubernetes Services
 
 Write-Host "🧪 Testing Kubernetes Services" -ForegroundColor Green
 Write-Host "===============================" -ForegroundColor Green
 
-# Test webserver health check
 Write-Host "🔍 Testing webserver health check..." -ForegroundColor Yellow
 try {
     $webserverResponse = Invoke-RestMethod -Uri "http://localhost:8080/healthz" -TimeoutSec 5 -ErrorAction Stop
@@ -19,7 +17,6 @@ try {
     Write-Host "   Error: $($_.Exception.Message)" -ForegroundColor Gray
 }
 
-# Test webserver main page
 Write-Host "🔍 Testing webserver main page..." -ForegroundColor Yellow
 try {
     $webserverHtml = Invoke-WebRequest -Uri "http://localhost:8080/" -TimeoutSec 5 -ErrorAction Stop
@@ -34,7 +31,6 @@ try {
     Write-Host "   Error: $($_.Exception.Message)" -ForegroundColor Gray
 }
 
-# Test SPA
 Write-Host "🔍 Testing SPA main page..." -ForegroundColor Yellow
 try {
     $spaResponse = Invoke-WebRequest -Uri "http://localhost:3000/" -TimeoutSec 5 -ErrorAction Stop

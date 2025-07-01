@@ -1,9 +1,8 @@
-#!/bin/bash
+
 
 echo "🧪 Testing Kubernetes Services"
 echo "==============================="
 
-# Test webserver health check
 echo "🔍 Testing webserver health check..."
 WEBSERVER_RESPONSE=$(curl -s http://localhost:8080/healthz 2>/dev/null || echo "FAILED")
 if echo "$WEBSERVER_RESPONSE" | grep -q '"status":"OK"'; then
@@ -14,7 +13,6 @@ else
     echo "   Response: $WEBSERVER_RESPONSE"
 fi
 
-# Test webserver main page
 echo "🔍 Testing webserver main page..."
 WEBSERVER_HTML=$(curl -s http://localhost:8080/ 2>/dev/null || echo "FAILED")
 if echo "$WEBSERVER_HTML" | grep -q "Hello, Kubernetes!"; then
@@ -24,7 +22,6 @@ else
     echo "   kubectl port-forward svc/webserver-service 8080:80"
 fi
 
-# Test SPA
 echo "🔍 Testing SPA main page..."
 SPA_RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/ 2>/dev/null || echo "FAILED")
 if [ "$SPA_RESPONSE" = "200" ]; then

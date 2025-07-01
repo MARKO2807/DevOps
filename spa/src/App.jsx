@@ -16,10 +16,8 @@ import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner'
 import ProductChart from './components/ProductChart/ProductChart'
 import ProductGrid from './components/ProductGrid/ProductGrid'
 
-// Custom hook
 import { useProducts } from './hooks/useProducts'
 
-// Register Chart.js components
 ChartJS.register(
   CategoryScale,
   LinearScale,

@@ -33,21 +33,16 @@ This project demonstrates a complete Kubernetes deployment with two services:
 ### Manual Setup
 
 ```bash
-# Create kind cluster
 kind create cluster --name my-cluster
 
-# Build and deploy web server
 docker build -t webserver:latest ./webserver
 kind load docker-image webserver:latest --name my-cluster
 
-# Build and deploy SPA
 docker build -t spa:latest ./spa
 kind load docker-image spa:latest --name my-cluster
 
-# Deploy to Kubernetes
 kubectl apply -f ./k8s/
 
-# Port forward services (run in separate terminals)
 kubectl port-forward svc/webserver-service 8080:80
 kubectl port-forward svc/spa-service 3000:80
 ```
