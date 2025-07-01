@@ -17,7 +17,7 @@ spec:
       containers:
       - name: webserver
         image: webserver:latest
-        imagePullPolicy: Never  # Use local image
+        imagePullPolicy: Never  
         ports:
         - containerPort: 80
         resources:

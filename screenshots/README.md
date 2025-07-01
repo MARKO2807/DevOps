@@ -1,6 +1,5 @@
 # Screenshots Directory
 
-This directory should contain screenshots showing the application in action.
 
 ## Required Screenshots
 
